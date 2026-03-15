@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zaban — Language Preservation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1a1612;
+      --ink2: #4a4540;
+      --ink3: #8a8278;
+      --paper: #faf7f2;
+      --paper2: #f2ede4;
+      --paper3: #e8e0d4;
+      --gold: #b8862a;
+      --gold2: #d4a043;
+      --red: #c0392b;
+      --green: #1a6b3a;
+      --border: rgba(26,22,18,0.12);
+      --radius: 10px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      min-height: 100vh;
+      padding: 0 0 80px;
+    }
+    header {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 28px 32px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      right: -10px; top: -20px;
+      font-family: 'Lora', serif;
+      font-size: 140px;
+      color: rgba(255,255,255,0.04);
+      pointer-events: none;
+      line-height: 1;
+    }
+    .logo { font-family: 'Lora', serif; font-size: 28px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 4px; }
+    .logo span { color: var(--gold2); }
+    .tagline { font-size: 13px; color: rgba(255,255,255,0.5); letter-spacing: 0.04em; }
+    main { max-width: 680px; margin: 0 auto; padding: 36px 24px 0; }
+    .intro {
+      background: var(--paper2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      margin-bottom: 32px;
+    }
+    .intro p { font-size: 14px; color: var(--ink2); line-height: 1.7; margin-bottom: 10px; }
+    .intro p:last-child { margin-bottom: 0; }
+    .intro strong { color: var(--ink); font-weight: 500; }
+    .progress-bar { height: 3px; background: var(--paper3); border-radius: 2px; margin-bottom: 24px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--gold2); border-radius: 2px; width: 0%; transition: width 0.4s ease; }
+    .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink3); margin-bottom: 12px; }
+    .contributor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 32px; }
+    @media (max-width: 500px) { .contributor-grid { grid-template-columns: 1fr; } }
+    .field { display: flex; flex-direction: column; gap: 5px; }
+    .field label { font-size: 12px; font-weight: 500; color: var(--ink2); letter-spacing: 0.02em; }
+    .field input, .field select {
+      font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink);
+      background: #fff; border: 1px solid var(--border); border-radius: 8px;
+      padding: 9px 12px; outline: none; transition: border-color 0.15s; width: 100%;
+    }
+    .field input:focus, .field select:focus { border-color: var(--gold); }
+    .field select option { background: #fff; }
+
+    /* ── PHRASE CARD ── */
+    .phrase-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 20px; overflow: hidden; }
+    .card-header { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; background: var(--paper2); border-bottom: 1px solid var(--border); }
+    .card-num { font-size: 12px; font-weight: 500; color: var(--ink3); letter-spacing: 0.05em; text-transform: uppercase; }
+    .remove-btn { font-size: 12px; color: var(--ink3); background: none; border: none; cursor: pointer; padding: 3px 8px; border-radius: 4px; font-family: 'DM Sans', sans-serif; transition: color 0.15s; }
+    .remove-btn:hover { color: var(--red); }
+    .card-body { padding: 16px; }
+
+    /* ── INLINE REC FIELD ── */
+    .rec-field { margin-bottom: 16px; }
+    .rec-field-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+    .rec-field-label { font-size: 12px; font-weight: 500; color: var(--ink2); }
+    .lang-tag { font-size: 11px; color: var(--ink3); }
+
+    /* Translation lang row */
+    .trans-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .trans-label { font-size: 12px; font-weight: 500; color: var(--ink2); }
+    .lang-select-inline {
+      font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--ink);
+      background: var(--paper2); border: 1px solid var(--border); border-radius: 6px;
+      padding: 3px 8px; outline: none; cursor: pointer; transition: border-color 0.15s;
+    }
+    .lang-select-inline:focus { border-color: var(--gold); }
+
+    /* The combined textarea+mic / input+mic panel */
+    .rec-panel {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--paper);
+      overflow: hidden;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .rec-panel:focus-within { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(184,134,42,0.1); }
+    .rec-panel.rec-active { border-color: var(--red); box-shadow: 0 0 0 2px rgba(192,57,43,0.08); }
+
+    .rec-row { display: flex; align-items: stretch; }
+
+    .rec-textarea {
+      flex: 1; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--ink);
+      background: transparent; border: none; outline: none;
+      padding: 12px 14px; resize: none; min-height: 82px; line-height: 1.6;
+    }
+    .rec-textarea::placeholder { color: var(--paper3); }
+
+    .rec-input {
+      flex: 1; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--ink);
+      background: transparent; border: none; outline: none;
+      padding: 0 14px; height: 50px; width: 100%;
+    }
+    .rec-input::placeholder { color: var(--paper3); }
+    .rec-row.single { align-items: center; min-height: 50px; }
+
+    /* Mic button column */
+    .mic-col {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 10px 14px; border-left: 1px solid var(--border);
+      gap: 4px; min-width: 68px; cursor: pointer;
+      transition: background 0.15s; user-select: none; flex-shrink: 0;
+    }
+    .mic-col:hover { background: var(--paper2); }
+    .mic-col.rec { background: #fff5f5; }
+
+    .mic-ring {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: var(--paper3);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .mic-col:hover .mic-ring { background: var(--gold2); }
+    .mic-col.rec .mic-ring {
+      background: var(--red);
+      animation: pulse 1.3s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(192,57,43,0.25); }
+      50% { box-shadow: 0 0 0 7px rgba(192,57,43,0); }
+    }
+    .mic-ring svg { width: 14px; height: 14px; display: block; }
+
+    .mic-word { font-size: 10px; color: var(--ink3); letter-spacing: 0.03em; }
+    .mic-col.rec .mic-word { display: none; }
+    .mic-timer { font-size: 10px; color: var(--red); display: none; font-variant-numeric: tabular-nums; }
+    .mic-col.rec .mic-timer { display: block; }
+
+    /* Audio playback strip */
+    .audio-strip {
+      display: none; align-items: center; gap: 8px;
+      padding: 8px 12px; border-top: 1px solid var(--border); background: var(--paper2);
+    }
+    .audio-strip.show { display: flex; }
+    .audio-strip audio { flex: 1; height: 28px; }
+    .chip {
+      font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 10px; white-space: nowrap;
+    }
+    .chip.ready { background: #e6f4ec; color: var(--green); }
+    .chip.uploading { background: #fdf3e3; color: var(--gold); }
+    .chip.uploaded { background: #e6f4ec; color: var(--green); }
+    .chip.error { background: #fde8e8; color: var(--red); }
+    .discard { font-size: 11px; color: var(--ink3); background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: color 0.15s; }
+    .discard:hover { color: var(--red); }
+
+    /* Meta grid */
+    .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+    @media (max-width: 500px) { .meta-grid { grid-template-columns: 1fr; } }
+    .meta-field label { font-size: 11px; font-weight: 500; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 4px; }
+    .meta-field select, .meta-field input {
+      font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--ink);
+      background: var(--paper); border: 1px solid var(--border); border-radius: 7px;
+      padding: 7px 10px; outline: none; width: 100%; transition: border-color 0.15s;
+    }
+    .meta-field select:focus, .meta-field input:focus { border-color: var(--gold); }
+
+    /* Add / submit */
+    .add-btn {
+      width: 100%; padding: 13px; background: none;
+      border: 1.5px dashed var(--paper3); border-radius: var(--radius);
+      color: var(--ink3); font-family: 'DM Sans', sans-serif; font-size: 14px;
+      cursor: pointer; transition: all 0.2s; margin-bottom: 32px;
+    }
+    .add-btn:hover { border-color: var(--gold2); color: var(--gold); background: #fffcf5; }
+
+    .consent-box { background: var(--paper2); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 24px; }
+    .consent-title { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 12px; }
+    .consent-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+    .consent-item:last-child { margin-bottom: 0; }
+    .consent-item input[type="checkbox"] { margin-top: 3px; width: 15px; height: 15px; flex-shrink: 0; accent-color: var(--gold); }
+    .consent-item label { font-size: 13px; color: var(--ink2); line-height: 1.5; }
+
+    .submit-btn {
+      width: 100%; padding: 14px; background: var(--ink); color: var(--paper);
+      font-family: 'Lora', serif; font-size: 16px; font-weight: 600; border: none;
+      border-radius: var(--radius); cursor: pointer; transition: background 0.2s, transform 0.1s; letter-spacing: 0.02em;
+    }
+    .submit-btn:hover { background: #2d2820; }
+    .submit-btn:active { transform: scale(0.99); }
+    .submit-btn:disabled { background: var(--ink3); cursor: not-allowed; }
+
+    .toast {
+      position: fixed; bottom: 24px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--ink); color: var(--paper);
+      font-size: 13px; padding: 10px 20px; border-radius: 20px;
+      white-space: nowrap; transition: transform 0.3s ease; z-index: 100; pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .toast.error { background: var(--red); }
+
+    .success-screen { display: none; text-align: center; padding: 48px 24px; }
+    .success-screen.show { display: block; }
+    .success-icon { font-family: 'Lora', serif; font-size: 56px; color: var(--gold2); margin-bottom: 16px; }
+    .success-title { font-family: 'Lora', serif; font-size: 24px; color: var(--ink); margin-bottom: 10px; }
+    .success-sub { font-size: 14px; color: var(--ink2); line-height: 1.7; max-width: 400px; margin: 0 auto 24px; }
+    .again-btn {
+      padding: 10px 24px; background: none; border: 1.5px solid var(--ink);
+      border-radius: 20px; font-family: 'DM Sans', sans-serif; font-size: 13px;
+      font-weight: 500; color: var(--ink); cursor: pointer; transition: all 0.2s;
+    }
+    .again-btn:hover { background: var(--ink); color: var(--paper); }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Za<span>ban</span></div>
+  <div class="tagline">Language preservation — contributor form</div>
+</header>
+
+<main>
+  <div id="form-view">
+
+    <div class="intro">
+      <p>You are helping preserve the Kashmiri language for future generations. Every phrase, proverb, or expression you share becomes part of a living archive that will teach those who come after us.</p>
+      <p><strong>Your voice recordings are private.</strong> They will only be used for language research and the learning platform — never shared publicly without your permission.</p>
+    </div>
+
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+
+    <div class="section-label">About you</div>
+    <div class="contributor-grid">
+      <div class="field">
+        <label>Your name (optional)</label>
+        <input type="text" id="contributor-name" placeholder="e.g. Raj Kaul">
+      </div>
+      <div class="field">
+        <label>Your fluency in Kashmiri</label>
+        <select id="contributor-fluency">
+          <option>Native / mother tongue</option>
+          <option>Fluent, learned at home</option>
+          <option>Partial — heard growing up</option>
+          <option>Diaspora speaker</option>
+          <option>Researcher / academic</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Your age group</label>
+        <select id="contributor-age">
+          <option>Under 30</option>
+          <option>30–50</option>
+          <option>50–70</option>
+          <option>70+</option>
+          <option>Prefer not to say</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Where you grew up</label>
+        <input type="text" id="contributor-region" placeholder="e.g. Srinagar, Delhi, Mumbai">
+      </div>
+    </div>
+
+    <div class="section-label">Your phrases</div>
+    <div id="phrase-list"></div>
+    <button class="add-btn" onclick="addPhrase()">+ Add another phrase</button>
+
+    <div class="consent-box">
+      <div class="consent-title">Before you submit</div>
+      <div class="consent-item">
+        <input type="checkbox" id="c1">
+        <label for="c1">I understand my contributions will be used for language preservation research and to train a learning platform for Kashmiri.</label>
+      </div>
+      <div class="consent-item">
+        <input type="checkbox" id="c2">
+        <label for="c2">I consent to my voice recordings being stored securely for pronunciation modelling. They will not be shared publicly without my permission.</label>
+      </div>
+
+    </div>
+
+    <button class="submit-btn" id="submit-btn" onclick="submitAll()">Submit my contribution →</button>
+  </div>
+
+  <div class="success-screen" id="success-screen">
+    <div class="success-icon">Z</div>
+    <div class="success-title">Thank you</div>
+    <div class="success-sub">Your contribution has been saved. You have helped keep the Kashmiri language alive for the next generation.</div>
+    <button class="again-btn" onclick="resetForm()">Add more phrases</button>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const CLOUDINARY_CLOUD_NAME   = 'dt5rljllp';
+const CLOUDINARY_UPLOAD_PRESET = 'language-speech-store';
+const SHEETS_ENDPOINT          = 'https://script.google.com/macros/s/AKfycbzdTpzz5eanPSndCosK6LDWAumplOIKfpZ6vJS_9fCv6jaI9UkUSkVb8ZTB6GmXwq0/exec';
+
+const LANGS = [
+  { v:'hi', l:'Hindi' }, { v:'en', l:'English' },
+  { v:'pa', l:'Punjabi' }, { v:'bn', l:'Bengali' }, { v:'mr', l:'Marathi' },
+  { v:'gu', l:'Gujarati' }, { v:'ta', l:'Tamil' }, { v:'te', l:'Telugu' },
+  { v:'kn', l:'Kannada' }, { v:'ml', l:'Malayalam' }, { v:'or', l:'Odia' },
+];
+
+const MIC_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="9" y="2" width="6" height="11" rx="3"/>
+  <path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/>
+  <line x1="8" y1="22" x2="16" y2="22"/></svg>`;
+
+const STOP_SVG = `<svg viewBox="0 0 24 24" fill="#fff" stroke="none">
+  <rect x="7" y="7" width="10" height="10" rx="2"/></svg>`;
+
+const MIC_SVG_WHITE = `<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="9" y="2" width="6" height="11" rx="3"/>
+  <path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/>
+  <line x1="8" y1="22" x2="16" y2="22"/></svg>`;
+
+let pCount = 0;
+const S = {}; // S[id][side] = { blob, url, cloudUrl, mr, stream, tiv, secs }
+
+addPhrase();
+
+function addPhrase() {
+  pCount++;
+  const id = pCount;
+  S[id] = {
+    kashmiri:    newAudio(),
+    translation: newAudio()
+  };
+
+  const langOpts = LANGS.map(l => `<option value="${l.v}"${l.v==='hi'?' selected':''}>${l.l}</option>`).join('');
+
+  const card = document.createElement('div');
+  card.className = 'phrase-card';
+  card.id = 'pc-' + id;
+  card.innerHTML = `
+    <div class="card-header">
+      <div class="card-num">Phrase ${id}</div>
+      ${id > 1 ? `<button class="remove-btn" onclick="removePhrase(${id})">Remove</button>` : ''}
+    </div>
+    <div class="card-body">
+
+      <!-- KASHMIRI — voice only -->
+      <div class="rec-field">
+        <div class="rec-field-top">
+          <span class="rec-field-label">Kashmiri phrase or expression</span>
+        </div>
+        <div class="rec-panel" id="kp-${id}">
+          <div class="rec-row" style="min-height:90px;align-items:center;justify-content:center;cursor:pointer;"
+               onclick="toggleRec(${id},'kashmiri')" id="km-${id}">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px 0;flex:1;">
+              <div class="mic-ring" id="kmr-${id}" style="width:44px;height:44px;">${MIC_SVG}</div>
+              <span class="mic-word" id="kw-${id}" style="font-size:13px;color:var(--ink3);">Tap to record pronunciation</span>
+              <span class="mic-timer" id="kt-${id}" style="font-size:13px;color:var(--red);display:none;">0:00</span>
+            </div>
+          </div>
+          <div class="audio-strip" id="ka-${id}">
+            <audio id="kpl-${id}" controls></audio>
+            <span class="chip ready" id="kc-${id}">Ready</span>
+            <button class="discard" onclick="discardAudio(${id},'kashmiri')">Discard</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRANSLATION -->
+      <div class="rec-field">
+        <div class="trans-header">
+          <span class="trans-label">Translation in</span>
+          <select class="lang-select-inline" id="tl-${id}">${langOpts}</select>
+        </div>
+        <div class="rec-panel" id="tp-${id}">
+          <div class="rec-row single">
+            <input type="text" class="rec-input" id="tr-${id}"
+              placeholder="Type the meaning… or press the mic to say it"
+              oninput="onInput()">
+            <div class="mic-col" id="tm-${id}" onclick="toggleRec(${id},'translation')">
+              <div class="mic-ring" id="tmr-${id}">${MIC_SVG}</div>
+              <span class="mic-word">Speak</span>
+              <span class="mic-timer" id="tt-${id}">0:00</span>
+            </div>
+          </div>
+          <div class="audio-strip" id="ta-${id}">
+            <audio id="tpl-${id}" controls></audio>
+            <span class="chip ready" id="tc-${id}">Ready</span>
+            <button class="discard" onclick="discardAudio(${id},'translation')">Discard</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- META -->
+      <div class="meta-grid">
+        <div class="meta-field">
+          <label>Category</label>
+          <select id="cat-${id}">
+            <option>Everyday greeting</option><option>Proverb / saying</option>
+            <option>Food & cooking</option><option>Family & kinship</option>
+            <option>Nature & seasons</option><option>Emotion</option>
+            <option>Celebration / festival</option><option>Prayer / spiritual</option>
+            <option>Story / folklore</option><option>Other</option>
+          </select>
+        </div>
+        <div class="meta-field">
+          <label>Context of use</label>
+          <select id="ctx-${id}">
+            <option>Casual / everyday</option><option>Formal</option>
+            <option>Elder / respectful speech</option><option>Children's speech</option>
+            <option>Weddings / celebrations</option><option>Prayer / ritual</option>
+          </select>
+        </div>
+        <div class="meta-field" style="grid-column:1/-1">
+          <label>Extra context (optional)</label>
+          <input type="text" id="nt-${id}" placeholder="e.g. my grandmother said this every morning, only used in winter…">
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('phrase-list').appendChild(card);
+  onInput();
+  if (id > 1) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function removePhrase(id) {
+  stopRec(id, 'kashmiri'); stopRec(id, 'translation');
+  document.getElementById('pc-' + id)?.remove();
+  delete S[id];
+  onInput();
+}
+
+function newAudio() {
+  return { blob: null, url: null, cloudUrl: null, mr: null, stream: null, tiv: null, secs: 0 };
+}
+
+/* ── RECORDING ── */
+async function toggleRec(id, side) {
+  const s = S[id]?.[side];
+  if (!s) return;
+  s.mr?.state === 'recording' ? stopRec(id, side) : await startRec(id, side);
+}
+
+async function startRec(id, side) {
+  const s = S[id]?.[side];
+  if (!s) return;
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    Object.assign(s, { stream, blob: null, url: null, cloudUrl: null, secs: 0 });
+    const chunks = [];
+    const mr = new MediaRecorder(stream);
+    s.mr = mr;
+    mr.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+    mr.onstop = () => {
+      const blob = new Blob(chunks, { type: 'audio/webm' });
+      s.blob = blob;
+      s.url = URL.createObjectURL(blob);
+      const pre = side === 'kashmiri' ? 'k' : 't';
+      const player = document.getElementById(`${pre}pl-${id}`);
+      const strip  = document.getElementById(`${pre}a-${id}`);
+      if (player) player.src = s.url;
+      if (strip)  strip.classList.add('show');
+      setChip(id, side, 'ready', 'Ready');
+      stream.getTracks().forEach(t => t.stop());
+    };
+    mr.start();
+    setMicUI(id, side, true);
+    s.tiv = setInterval(() => {
+      s.secs++;
+      const pre = side === 'kashmiri' ? 'k' : 't';
+      const el = document.getElementById(`${pre}t-${id}`);
+      if (el) el.textContent = fmt(s.secs);
+      if (s.secs >= 120) stopRec(id, side);
+    }, 1000);
+  } catch {
+    showToast('Microphone access denied — please allow it in your browser settings.', true);
+  }
+}
+
+function stopRec(id, side) {
+  const s = S[id]?.[side];
+  if (!s) return;
+  if (s.mr?.state === 'recording') s.mr.stop();
+  if (s.tiv) clearInterval(s.tiv);
+  setMicUI(id, side, false);
+}
+
+function setMicUI(id, side, active) {
+  const pre   = side === 'kashmiri' ? 'k' : 't';
+  const ring  = document.getElementById(`${pre}mr-${id}`);
+  const panel = document.getElementById(`${side === 'kashmiri' ? 'kp' : 'tp'}-${id}`);
+  panel?.classList.toggle('rec-active', active);
+  if (ring) ring.innerHTML = active ? STOP_SVG : (side === 'kashmiri' ? MIC_SVG_WHITE : MIC_SVG);
+
+  if (side === 'kashmiri') {
+    const word  = document.getElementById(`kw-${id}`);
+    const timer = document.getElementById(`kt-${id}`);
+    if (word)  word.style.display  = active ? 'none'  : 'block';
+    if (timer) timer.style.display = active ? 'block' : 'none';
+    if (ring && active) ring.style.background = 'var(--red)';
+    if (ring && !active) ring.style.background = '';
+  } else {
+    const col = document.getElementById(`tm-${id}`);
+    col?.classList.toggle('rec', active);
+  }
+}
+
+function discardAudio(id, side) {
+  const s = S[id]?.[side];
+  if (!s) return;
+  s.blob = null; s.url = null; s.cloudUrl = null;
+  const pre = side === 'kashmiri' ? 'k' : 't';
+  const strip  = document.getElementById(`${pre}a-${id}`);
+  const player = document.getElementById(`${pre}pl-${id}`);
+  strip?.classList.remove('show');
+  if (player) player.src = '';
+}
+
+function setChip(id, side, type, text) {
+  const pre = side === 'kashmiri' ? 'k' : 't';
+  const el = document.getElementById(`${pre}c-${id}`);
+  if (!el) return;
+  el.className = 'chip ' + type;
+  el.textContent = text;
+}
+
+function fmt(s) { return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0'); }
+
+/* ── CLOUDINARY ── */
+async function uploadAudio(id, side) {
+  const s = S[id]?.[side];
+  if (!s?.blob) return null;
+  setChip(id, side, 'uploading', 'Uploading…');
+  const fd = new FormData();
+  fd.append('file', s.blob, `${side}-${id}-${Date.now()}.webm`);
+  fd.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+  fd.append('resource_type', 'video');
+  try {
+    const res  = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/video/upload`, { method:'POST', body:fd });
+    const data = await res.json();
+    if (data.secure_url) { s.cloudUrl = data.secure_url; setChip(id, side, 'uploaded', 'Saved'); return data.secure_url; }
+    setChip(id, side, 'error', 'Failed'); return null;
+  } catch { setChip(id, side, 'error', 'Failed'); return null; }
+}
+
+/* ── SUBMIT ── */
+async function submitAll() {
+  if (!document.getElementById('c1').checked || !document.getElementById('c2').checked) {
+    showToast('Please accept the consent statements to continue.', true); return;
+  }
+  const ids = Object.keys(S).filter(id => document.getElementById('pc-' + id));
+  if (!ids.length) { showToast('Please add at least one phrase.', true); return; }
+  const hasContent = ids.some(id => S[id].kashmiri.blob || S[id].translation.blob);
+  if (!hasContent) { showToast('Please enter or record at least one Kashmiri phrase.', true); return; }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true; btn.textContent = 'Saving…';
+  setProgress(25);
+
+  for (const id of ids) {
+    await uploadAudio(id, 'kashmiri');
+    await uploadAudio(id, 'translation');
+  }
+
+  setProgress(70);
+
+  const contributor = {
+    name:      document.getElementById('contributor-name').value.trim() || 'Anonymous',
+    fluency:   document.getElementById('contributor-fluency').value,
+    age:       document.getElementById('contributor-age').value,
+    region:    document.getElementById('contributor-region').value.trim(),
+    timestamp: new Date().toISOString()
+  };
+
+  const phrases = ids.map(id => {
+    const langCode = document.getElementById('tl-'+id)?.value;
+    const langLabel = LANGS.find(l => l.v === langCode)?.l || 'Hindi';
+    return {
+      kashmiriAudio:    S[id].kashmiri.cloudUrl || '',
+      translation:      document.getElementById('tr-'+id)?.value.trim() || '',
+      translationLang:  langLabel,
+      translationAudio: S[id].translation.cloudUrl || '',
+      category:         document.getElementById('cat-'+id)?.value || '',
+      context:          document.getElementById('ctx-'+id)?.value || '',
+      notes:            document.getElementById('nt-'+id)?.value.trim() || ''
+    };
+  });
+
+  try {
+    await fetch(SHEETS_ENDPOINT, {
+      method: 'POST', mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contributor, phrases })
+    });
+  } catch { console.log('Sheet call sent'); }
+
+  setProgress(100);
+  setTimeout(() => {
+    document.getElementById('form-view').style.display = 'none';
+    document.getElementById('success-screen').classList.add('show');
+  }, 400);
+}
+
+/* ── RESET ── */
+function resetForm() {
+  document.getElementById('form-view').style.display = 'block';
+  document.getElementById('success-screen').classList.remove('show');
+  document.getElementById('phrase-list').innerHTML = '';
+  Object.keys(S).forEach(id => delete S[id]);
+  pCount = 0;
+  ['contributor-name','contributor-region'].forEach(id => document.getElementById(id).value = '');
+  ['c1','c2'].forEach(id => document.getElementById(id).checked = false);
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = false; btn.textContent = 'Submit my contribution →';
+  setProgress(0); addPhrase();
+}
+
+/* ── UTILS ── */
+function showToast(msg, err=false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (err ? ' error' : '');
+  setTimeout(() => t.className = 'toast', 3500);
+}
+
+function setProgress(v) { document.getElementById('progress-fill').style.width = v + '%'; }
+
+function onInput() {
+  const ids = Object.keys(S).filter(id => document.getElementById('pc-' + id));
+  const filled = ids.filter(id => {
+    const t = document.getElementById('tr-'+id)?.value.trim();
+    return t || S[id]?.kashmiri?.blob || S[id]?.translation?.blob;
+  }).length;
+  setProgress(ids.length ? Math.min(85, Math.round((filled/ids.length)*60)) : 0);
+}
+</script>
+</body>
+</html>
