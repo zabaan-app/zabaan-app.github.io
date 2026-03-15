@@ -74,22 +74,15 @@
     }
     .field input:focus, .field select:focus { border-color: var(--gold); }
     .field select option { background: #fff; }
-
-    /* ── PHRASE CARD ── */
     .phrase-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 20px; overflow: hidden; }
     .card-header { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; background: var(--paper2); border-bottom: 1px solid var(--border); }
     .card-num { font-size: 12px; font-weight: 500; color: var(--ink3); letter-spacing: 0.05em; text-transform: uppercase; }
     .remove-btn { font-size: 12px; color: var(--ink3); background: none; border: none; cursor: pointer; padding: 3px 8px; border-radius: 4px; font-family: 'DM Sans', sans-serif; transition: color 0.15s; }
     .remove-btn:hover { color: var(--red); }
     .card-body { padding: 16px; }
-
-    /* ── INLINE REC FIELD ── */
     .rec-field { margin-bottom: 16px; }
     .rec-field-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
     .rec-field-label { font-size: 12px; font-weight: 500; color: var(--ink2); }
-    .lang-tag { font-size: 11px; color: var(--ink3); }
-
-    /* Translation lang row */
     .trans-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
     .trans-label { font-size: 12px; font-weight: 500; color: var(--ink2); }
     .lang-select-inline {
@@ -98,8 +91,6 @@
       padding: 3px 8px; outline: none; cursor: pointer; transition: border-color 0.15s;
     }
     .lang-select-inline:focus { border-color: var(--gold); }
-
-    /* The combined textarea+mic / input+mic panel */
     .rec-panel {
       border: 1px solid var(--border);
       border-radius: 8px;
@@ -109,16 +100,8 @@
     }
     .rec-panel:focus-within { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(184,134,42,0.1); }
     .rec-panel.rec-active { border-color: var(--red); box-shadow: 0 0 0 2px rgba(192,57,43,0.08); }
-
+    .rec-panel.missing { border-color: var(--red); }
     .rec-row { display: flex; align-items: stretch; }
-
-    .rec-textarea {
-      flex: 1; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--ink);
-      background: transparent; border: none; outline: none;
-      padding: 12px 14px; resize: none; min-height: 82px; line-height: 1.6;
-    }
-    .rec-textarea::placeholder { color: var(--paper3); }
-
     .rec-input {
       flex: 1; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--ink);
       background: transparent; border: none; outline: none;
@@ -126,8 +109,6 @@
     }
     .rec-input::placeholder { color: var(--paper3); }
     .rec-row.single { align-items: center; min-height: 50px; }
-
-    /* Mic button column */
     .mic-col {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       padding: 10px 14px; border-left: 1px solid var(--border);
@@ -136,7 +117,6 @@
     }
     .mic-col:hover { background: var(--paper2); }
     .mic-col.rec { background: #fff5f5; }
-
     .mic-ring {
       width: 30px; height: 30px; border-radius: 50%;
       background: var(--paper3);
@@ -145,39 +125,29 @@
       flex-shrink: 0;
     }
     .mic-col:hover .mic-ring { background: var(--gold2); }
-    .mic-col.rec .mic-ring {
-      background: var(--red);
-      animation: pulse 1.3s ease-in-out infinite;
-    }
+    .mic-col.rec .mic-ring { background: var(--red); animation: pulse 1.3s ease-in-out infinite; }
     @keyframes pulse {
       0%,100% { box-shadow: 0 0 0 0 rgba(192,57,43,0.25); }
       50% { box-shadow: 0 0 0 7px rgba(192,57,43,0); }
     }
     .mic-ring svg { width: 14px; height: 14px; display: block; }
-
     .mic-word { font-size: 10px; color: var(--ink3); letter-spacing: 0.03em; }
     .mic-col.rec .mic-word { display: none; }
     .mic-timer { font-size: 10px; color: var(--red); display: none; font-variant-numeric: tabular-nums; }
     .mic-col.rec .mic-timer { display: block; }
-
-    /* Audio playback strip */
     .audio-strip {
       display: none; align-items: center; gap: 8px;
       padding: 8px 12px; border-top: 1px solid var(--border); background: var(--paper2);
     }
     .audio-strip.show { display: flex; }
     .audio-strip audio { flex: 1; height: 28px; }
-    .chip {
-      font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 10px; white-space: nowrap;
-    }
+    .chip { font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
     .chip.ready { background: #e6f4ec; color: var(--green); }
     .chip.uploading { background: #fdf3e3; color: var(--gold); }
     .chip.uploaded { background: #e6f4ec; color: var(--green); }
     .chip.error { background: #fde8e8; color: var(--red); }
     .discard { font-size: 11px; color: var(--ink3); background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: color 0.15s; }
     .discard:hover { color: var(--red); }
-
-    /* Meta grid */
     .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
     @media (max-width: 500px) { .meta-grid { grid-template-columns: 1fr; } }
     .meta-field label { font-size: 11px; font-weight: 500; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 4px; }
@@ -187,8 +157,6 @@
       padding: 7px 10px; outline: none; width: 100%; transition: border-color 0.15s;
     }
     .meta-field select:focus, .meta-field input:focus { border-color: var(--gold); }
-
-    /* Add / submit */
     .add-btn {
       width: 100%; padding: 13px; background: none;
       border: 1.5px dashed var(--paper3); border-radius: var(--radius);
@@ -196,14 +164,12 @@
       cursor: pointer; transition: all 0.2s; margin-bottom: 32px;
     }
     .add-btn:hover { border-color: var(--gold2); color: var(--gold); background: #fffcf5; }
-
     .consent-box { background: var(--paper2); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 24px; }
     .consent-title { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 12px; }
     .consent-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
     .consent-item:last-child { margin-bottom: 0; }
     .consent-item input[type="checkbox"] { margin-top: 3px; width: 15px; height: 15px; flex-shrink: 0; accent-color: var(--gold); }
     .consent-item label { font-size: 13px; color: var(--ink2); line-height: 1.5; }
-
     .submit-btn {
       width: 100%; padding: 14px; background: var(--ink); color: var(--paper);
       font-family: 'Lora', serif; font-size: 16px; font-weight: 600; border: none;
@@ -212,7 +178,6 @@
     .submit-btn:hover { background: #2d2820; }
     .submit-btn:active { transform: scale(0.99); }
     .submit-btn:disabled { background: var(--ink3); cursor: not-allowed; }
-
     .toast {
       position: fixed; bottom: 24px; left: 50%;
       transform: translateX(-50%) translateY(80px);
@@ -222,7 +187,6 @@
     }
     .toast.show { transform: translateX(-50%) translateY(0); }
     .toast.error { background: var(--red); }
-
     .success-screen { display: none; text-align: center; padding: 48px 24px; }
     .success-screen.show { display: block; }
     .success-icon { font-family: 'Lora', serif; font-size: 56px; color: var(--gold2); margin-bottom: 16px; }
@@ -245,7 +209,6 @@
 
 <main>
   <div id="form-view">
-
     <div class="intro">
       <p>You are helping preserve the Kashmiri language for future generations. Every phrase, proverb, or expression you share becomes part of a living archive that will teach those who come after us.</p>
       <p><strong>Your voice recordings are private.</strong> They will only be used for language research and the learning platform — never shared publicly without your permission.</p>
@@ -299,7 +262,6 @@
         <input type="checkbox" id="c2">
         <label for="c2">I consent to my voice recordings being stored securely for pronunciation modelling. They will not be shared publicly without my permission.</label>
       </div>
-
     </div>
 
     <button class="submit-btn" id="submit-btn" onclick="submitAll()">Submit my contribution →</button>
@@ -316,7 +278,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const CLOUDINARY_CLOUD_NAME   = 'dt5rljllp';
+const CLOUDINARY_CLOUD_NAME    = 'dt5rljllp';
 const CLOUDINARY_UPLOAD_PRESET = 'language-speech-store';
 const SHEETS_ENDPOINT          = 'https://script.google.com/macros/s/AKfycbzdTpzz5eanPSndCosK6LDWAumplOIKfpZ6vJS_9fCv6jaI9UkUSkVb8ZTB6GmXwq0/exec';
 
@@ -341,17 +303,14 @@ const MIC_SVG_WHITE = `<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke
   <line x1="8" y1="22" x2="16" y2="22"/></svg>`;
 
 let pCount = 0;
-const S = {}; // S[id][side] = { blob, url, cloudUrl, mr, stream, tiv, secs }
+const S = {};
 
 addPhrase();
 
 function addPhrase() {
   pCount++;
   const id = pCount;
-  S[id] = {
-    kashmiri:    newAudio(),
-    translation: newAudio()
-  };
+  S[id] = { kashmiri: newAudio(), translation: newAudio() };
 
   const langOpts = LANGS.map(l => `<option value="${l.v}"${l.v==='hi'?' selected':''}>${l.l}</option>`).join('');
 
@@ -456,7 +415,6 @@ function newAudio() {
   return { blob: null, url: null, cloudUrl: null, mr: null, stream: null, tiv: null, secs: 0 };
 }
 
-/* ── RECORDING ── */
 async function toggleRec(id, side) {
   const s = S[id]?.[side];
   if (!s) return;
@@ -513,7 +471,6 @@ function setMicUI(id, side, active) {
   const panel = document.getElementById(`${side === 'kashmiri' ? 'kp' : 'tp'}-${id}`);
   panel?.classList.toggle('rec-active', active);
   if (ring) ring.innerHTML = active ? STOP_SVG : (side === 'kashmiri' ? MIC_SVG_WHITE : MIC_SVG);
-
   if (side === 'kashmiri') {
     const word  = document.getElementById(`kw-${id}`);
     const timer = document.getElementById(`kt-${id}`);
@@ -532,15 +489,13 @@ function discardAudio(id, side) {
   if (!s) return;
   s.blob = null; s.url = null; s.cloudUrl = null;
   const pre = side === 'kashmiri' ? 'k' : 't';
-  const strip  = document.getElementById(`${pre}a-${id}`);
+  document.getElementById(`${pre}a-${id}`)?.classList.remove('show');
   const player = document.getElementById(`${pre}pl-${id}`);
-  strip?.classList.remove('show');
   if (player) player.src = '';
 }
 
 function setChip(id, side, type, text) {
-  const pre = side === 'kashmiri' ? 'k' : 't';
-  const el = document.getElementById(`${pre}c-${id}`);
+  const el = document.getElementById(`${side === 'kashmiri' ? 'k' : 't'}c-${id}`);
   if (!el) return;
   el.className = 'chip ' + type;
   el.textContent = text;
@@ -548,7 +503,6 @@ function setChip(id, side, type, text) {
 
 function fmt(s) { return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0'); }
 
-/* ── CLOUDINARY ── */
 async function uploadAudio(id, side) {
   const s = S[id]?.[side];
   if (!s?.blob) return null;
@@ -565,15 +519,29 @@ async function uploadAudio(id, side) {
   } catch { setChip(id, side, 'error', 'Failed'); return null; }
 }
 
-/* ── SUBMIT ── */
 async function submitAll() {
   if (!document.getElementById('c1').checked || !document.getElementById('c2').checked) {
     showToast('Please accept the consent statements to continue.', true); return;
   }
+
   const ids = Object.keys(S).filter(id => document.getElementById('pc-' + id));
   if (!ids.length) { showToast('Please add at least one phrase.', true); return; }
-  const hasContent = ids.some(id => S[id].kashmiri.blob || S[id].translation.blob);
-  if (!hasContent) { showToast('Please enter or record at least one Kashmiri phrase.', true); return; }
+
+  const hasContent = ids.some(id => S[id].kashmiri.blob);
+  if (!hasContent) { showToast('Please record at least one Kashmiri phrase.', true); return; }
+
+  const missingTranslation = ids.filter(id =>
+    S[id].kashmiri.blob &&
+    !document.getElementById('tr-'+id)?.value.trim() &&
+    !S[id].translation.blob
+  );
+  if (missingTranslation.length) {
+    showToast('Please add a translation for every phrase — it is essential for the research.', true);
+    const first = missingTranslation[0];
+    document.getElementById('tr-' + first)?.focus();
+    document.getElementById('tp-' + first)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
 
   const btn = document.getElementById('submit-btn');
   btn.disabled = true; btn.textContent = 'Saving…';
@@ -623,7 +591,6 @@ async function submitAll() {
   }, 400);
 }
 
-/* ── RESET ── */
 function resetForm() {
   document.getElementById('form-view').style.display = 'block';
   document.getElementById('success-screen').classList.remove('show');
@@ -637,7 +604,6 @@ function resetForm() {
   setProgress(0); addPhrase();
 }
 
-/* ── UTILS ── */
 function showToast(msg, err=false) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -656,8 +622,9 @@ function onInput() {
   setProgress(ids.length ? Math.min(85, Math.round((filled/ids.length)*60)) : 0);
 }
 </script>
-  <footer style="text-align:center;padding:24px;font-size:12px;color:var(--ink3);">
-  Built by <a href="https://www.linkedin.com/in/koushalbhat/" target="_blank" 
+
+<footer style="text-align:center;padding:24px;font-size:12px;color:var(--ink3);">
+  Built by <a href="https://www.linkedin.com/in/koushalbhat/" target="_blank"
   style="color:var(--gold);text-decoration:none;">Koushal Bhat</a> · Zabaan Project
 </footer>
 </body>
