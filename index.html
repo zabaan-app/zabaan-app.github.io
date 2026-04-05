@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zabaan — Language Preservation</title>
+  <title>Zabaan — Securing our language as a legacy</title>
+  <meta name="description" content="Zabaan is a community-driven platform preserving the Kashmiri language through voice recordings, translations and cultural context — building an archive for future generations.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
@@ -22,41 +23,87 @@
       --radius: 10px;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--paper);
-      color: var(--ink);
-      min-height: 100vh;
-      padding: 0 0 80px;
+    body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); min-height: 100vh; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--ink); color: var(--paper);
+      padding: 64px 32px 72px; text-align: center;
+      position: relative; overflow: hidden;
     }
-    header {
-      background: var(--ink);
-      color: var(--paper);
-      padding: 28px 32px 24px;
-      position: relative;
-      overflow: hidden;
-    }
-    header::after {
-      content: '';
-      position: absolute;
-      right: -10px; top: -20px;
-      font-family: 'Lora', serif;
-      font-size: 140px;
-      color: rgba(255,255,255,0.04);
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 60% 0%, rgba(184,134,42,0.12) 0%, transparent 70%);
       pointer-events: none;
-      line-height: 1;
     }
-    .logo { font-family: 'Lora', serif; font-size: 28px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 4px; }
-    .logo span { color: var(--gold2); }
-    .tagline { font-size: 13px; color: rgba(255,255,255,0.5); letter-spacing: 0.04em; }
-    main { max-width: 680px; margin: 0 auto; padding: 36px 24px 0; }
-    .intro {
-      background: var(--paper2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px 22px;
-      margin-bottom: 32px;
+    .hero-logo {
+      font-family: 'Lora', serif; font-size: 18px; font-weight: 600;
+      color: var(--gold2); letter-spacing: 0.05em; margin-bottom: 40px;
+      opacity: 0; animation: fadeUp 0.6s ease forwards 0.1s;
     }
+    .hero-headline {
+      font-family: 'Lora', serif; font-size: clamp(26px, 5vw, 46px);
+      font-weight: 600; line-height: 1.25; letter-spacing: -0.5px;
+      max-width: 640px; margin: 0 auto 20px;
+      opacity: 0; animation: fadeUp 0.6s ease forwards 0.2s;
+    }
+    .hero-headline em { font-style: italic; color: var(--gold2); }
+    .hero-sub {
+      font-size: 16px; color: rgba(255,255,255,0.5);
+      max-width: 460px; margin: 0 auto 48px; line-height: 1.7;
+      opacity: 0; animation: fadeUp 0.6s ease forwards 0.3s;
+    }
+    .counter-wrap {
+      display: inline-flex; flex-direction: column; align-items: center; gap: 4px;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px; padding: 20px 48px; margin-bottom: 40px;
+      opacity: 0; animation: fadeUp 0.6s ease forwards 0.4s;
+    }
+    .counter-number {
+      font-family: 'Lora', serif; font-size: 56px; font-weight: 600;
+      color: var(--gold2); line-height: 1; letter-spacing: -2px;
+      font-variant-numeric: tabular-nums;
+    }
+    .counter-label { font-size: 12px; color: rgba(255,255,255,0.4); letter-spacing: 0.08em; text-transform: uppercase; }
+    .counter-sublabel { font-size: 11px; color: rgba(255,255,255,0.22); margin-top: 2px; }
+    .hero-cta {
+      display: inline-block; background: var(--gold2); color: var(--ink);
+      font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500;
+      padding: 14px 34px; border-radius: 30px; border: none; cursor: pointer;
+      transition: all 0.2s; opacity: 0; animation: fadeUp 0.6s ease forwards 0.5s;
+    }
+    .hero-cta:hover { background: #e0b050; transform: translateY(-2px); }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── STORY CARDS ── */
+    .story {
+      max-width: 680px; margin: 0 auto;
+      padding: 56px 24px; display: grid;
+      grid-template-columns: 1fr 1fr 1fr; gap: 20px;
+    }
+    @media (max-width: 600px) { .story { grid-template-columns: 1fr; } }
+    .story-card {
+      background: var(--paper2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px;
+    }
+    .story-icon { font-size: 22px; margin-bottom: 10px; }
+    .story-title { font-family: 'Lora', serif; font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+    .story-text { font-size: 13px; color: var(--ink2); line-height: 1.6; }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      max-width: 680px; margin: 0 auto; padding: 0 24px 40px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .divider-line { flex: 1; height: 1px; background: var(--border); }
+    .divider-text { font-size: 12px; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap; }
+
+    /* ── FORM ── */
+    .form-section { max-width: 680px; margin: 0 auto; padding: 0 24px 80px; }
+    .intro { background: var(--paper2); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; margin-bottom: 32px; }
     .intro p { font-size: 14px; color: var(--ink2); line-height: 1.7; margin-bottom: 10px; }
     .intro p:last-child { margin-bottom: 0; }
     .intro strong { color: var(--ink); font-weight: 500; }
@@ -85,84 +132,43 @@
     .rec-field-label { font-size: 12px; font-weight: 500; color: var(--ink2); }
     .trans-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
     .trans-label { font-size: 12px; font-weight: 500; color: var(--ink2); }
-    .lang-select-inline {
-      font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--ink);
-      background: var(--paper2); border: 1px solid var(--border); border-radius: 6px;
-      padding: 3px 8px; outline: none; cursor: pointer; transition: border-color 0.15s;
-    }
+    .lang-select-inline { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--ink); background: var(--paper2); border: 1px solid var(--border); border-radius: 6px; padding: 3px 8px; outline: none; cursor: pointer; transition: border-color 0.15s; }
     .lang-select-inline:focus { border-color: var(--gold); }
-    .rec-panel {
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--paper);
-      overflow: hidden;
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
+    .rec-panel { border: 1px solid var(--border); border-radius: 8px; background: var(--paper); overflow: hidden; transition: border-color 0.15s, box-shadow 0.15s; }
     .rec-panel:focus-within { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(184,134,42,0.1); }
     .rec-panel.rec-active { border-color: var(--red); box-shadow: 0 0 0 2px rgba(192,57,43,0.08); }
-    .rec-panel.missing { border-color: var(--red); }
     .rec-row { display: flex; align-items: stretch; }
-    .rec-input {
-      flex: 1; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--ink);
-      background: transparent; border: none; outline: none;
-      padding: 0 14px; height: 50px; width: 100%;
-    }
+    .rec-input { flex: 1; font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--ink); background: transparent; border: none; outline: none; padding: 0 14px; height: 50px; width: 100%; }
     .rec-input::placeholder { color: var(--paper3); }
     .rec-row.single { align-items: center; min-height: 50px; }
-    .mic-col {
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      padding: 10px 14px; border-left: 1px solid var(--border);
-      gap: 4px; min-width: 68px; cursor: pointer;
-      transition: background 0.15s; user-select: none; flex-shrink: 0;
-    }
+    .mic-col { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 14px; border-left: 1px solid var(--border); gap: 4px; min-width: 68px; cursor: pointer; transition: background 0.15s; user-select: none; flex-shrink: 0; }
     .mic-col:hover { background: var(--paper2); }
     .mic-col.rec { background: #fff5f5; }
-    .mic-ring {
-      width: 30px; height: 30px; border-radius: 50%;
-      background: var(--paper3);
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s;
-      flex-shrink: 0;
-    }
+    .mic-ring { width: 30px; height: 30px; border-radius: 50%; background: var(--paper3); display: flex; align-items: center; justify-content: center; transition: background 0.2s; flex-shrink: 0; }
     .mic-col:hover .mic-ring { background: var(--gold2); }
     .mic-col.rec .mic-ring { background: var(--red); animation: pulse 1.3s ease-in-out infinite; }
-    @keyframes pulse {
-      0%,100% { box-shadow: 0 0 0 0 rgba(192,57,43,0.25); }
-      50% { box-shadow: 0 0 0 7px rgba(192,57,43,0); }
-    }
+    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(192,57,43,0.25); } 50% { box-shadow: 0 0 0 7px rgba(192,57,43,0); } }
     .mic-ring svg { width: 14px; height: 14px; display: block; }
     .mic-word { font-size: 10px; color: var(--ink3); letter-spacing: 0.03em; }
     .mic-col.rec .mic-word { display: none; }
     .mic-timer { font-size: 10px; color: var(--red); display: none; font-variant-numeric: tabular-nums; }
     .mic-col.rec .mic-timer { display: block; }
-    .audio-strip {
-      display: none; align-items: center; gap: 8px;
-      padding: 8px 12px; border-top: 1px solid var(--border); background: var(--paper2);
-    }
+    .audio-strip { display: none; align-items: center; gap: 8px; padding: 8px 12px; border-top: 1px solid var(--border); background: var(--paper2); }
     .audio-strip.show { display: flex; }
     .audio-strip audio { flex: 1; height: 28px; }
     .chip { font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
-    .chip.ready { background: #e6f4ec; color: var(--green); }
-    .chip.uploading { background: #fdf3e3; color: var(--gold); }
+    .chip.ready    { background: #e6f4ec; color: var(--green); }
+    .chip.uploading{ background: #fdf3e3; color: var(--gold); }
     .chip.uploaded { background: #e6f4ec; color: var(--green); }
-    .chip.error { background: #fde8e8; color: var(--red); }
+    .chip.error    { background: #fde8e8; color: var(--red); }
     .discard { font-size: 11px; color: var(--ink3); background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: color 0.15s; }
     .discard:hover { color: var(--red); }
     .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
     @media (max-width: 500px) { .meta-grid { grid-template-columns: 1fr; } }
     .meta-field label { font-size: 11px; font-weight: 500; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 4px; }
-    .meta-field select, .meta-field input {
-      font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--ink);
-      background: var(--paper); border: 1px solid var(--border); border-radius: 7px;
-      padding: 7px 10px; outline: none; width: 100%; transition: border-color 0.15s;
-    }
+    .meta-field select, .meta-field input { font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--ink); background: var(--paper); border: 1px solid var(--border); border-radius: 7px; padding: 7px 10px; outline: none; width: 100%; transition: border-color 0.15s; }
     .meta-field select:focus, .meta-field input:focus { border-color: var(--gold); }
-    .add-btn {
-      width: 100%; padding: 13px; background: none;
-      border: 1.5px dashed var(--paper3); border-radius: var(--radius);
-      color: var(--ink3); font-family: 'DM Sans', sans-serif; font-size: 14px;
-      cursor: pointer; transition: all 0.2s; margin-bottom: 32px;
-    }
+    .add-btn { width: 100%; padding: 13px; background: none; border: 1.5px dashed var(--paper3); border-radius: var(--radius); color: var(--ink3); font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; transition: all 0.2s; margin-bottom: 32px; }
     .add-btn:hover { border-color: var(--gold2); color: var(--gold); background: #fffcf5; }
     .consent-box { background: var(--paper2); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 24px; }
     .consent-title { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 12px; }
@@ -170,21 +176,11 @@
     .consent-item:last-child { margin-bottom: 0; }
     .consent-item input[type="checkbox"] { margin-top: 3px; width: 15px; height: 15px; flex-shrink: 0; accent-color: var(--gold); }
     .consent-item label { font-size: 13px; color: var(--ink2); line-height: 1.5; }
-    .submit-btn {
-      width: 100%; padding: 14px; background: var(--ink); color: var(--paper);
-      font-family: 'Lora', serif; font-size: 16px; font-weight: 600; border: none;
-      border-radius: var(--radius); cursor: pointer; transition: background 0.2s, transform 0.1s; letter-spacing: 0.02em;
-    }
+    .submit-btn { width: 100%; padding: 14px; background: var(--ink); color: var(--paper); font-family: 'Lora', serif; font-size: 16px; font-weight: 600; border: none; border-radius: var(--radius); cursor: pointer; transition: background 0.2s, transform 0.1s; letter-spacing: 0.02em; }
     .submit-btn:hover { background: #2d2820; }
     .submit-btn:active { transform: scale(0.99); }
     .submit-btn:disabled { background: var(--ink3); cursor: not-allowed; }
-    .toast {
-      position: fixed; bottom: 24px; left: 50%;
-      transform: translateX(-50%) translateY(80px);
-      background: var(--ink); color: var(--paper);
-      font-size: 13px; padding: 10px 20px; border-radius: 20px;
-      white-space: nowrap; transition: transform 0.3s ease; z-index: 100; pointer-events: none;
-    }
+    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--ink); color: var(--paper); font-size: 13px; padding: 10px 20px; border-radius: 20px; white-space: nowrap; transition: transform 0.3s ease; z-index: 100; pointer-events: none; }
     .toast.show { transform: translateX(-50%) translateY(0); }
     .toast.error { background: var(--red); }
     .success-screen { display: none; text-align: center; padding: 48px 24px; }
@@ -192,25 +188,67 @@
     .success-icon { font-family: 'Lora', serif; font-size: 56px; color: var(--gold2); margin-bottom: 16px; }
     .success-title { font-family: 'Lora', serif; font-size: 24px; color: var(--ink); margin-bottom: 10px; }
     .success-sub { font-size: 14px; color: var(--ink2); line-height: 1.7; max-width: 400px; margin: 0 auto 24px; }
-    .again-btn {
-      padding: 10px 24px; background: none; border: 1.5px solid var(--ink);
-      border-radius: 20px; font-family: 'DM Sans', sans-serif; font-size: 13px;
-      font-weight: 500; color: var(--ink); cursor: pointer; transition: all 0.2s;
-    }
+    .again-btn { padding: 10px 24px; background: none; border: 1.5px solid var(--ink); border-radius: 20px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--ink); cursor: pointer; transition: all 0.2s; }
     .again-btn:hover { background: var(--ink); color: var(--paper); }
+    footer { text-align: center; padding: 24px; font-size: 12px; color: var(--ink3); border-top: 1px solid var(--border); }
+    footer a { color: var(--gold); text-decoration: none; }
   </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">Za<span>baan</span></div>
-  <div class="tagline">Language preservation — contributor form</div>
-</header>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-logo">Zabaan</div>
+  <h1 class="hero-headline">
+    Securing our language as<br>
+    <em>a legacy for future ones to know and learn</em>
+  </h1>
+  <p class="hero-sub">
+    Every Kashmiri phrase recorded here becomes part of a permanent archive —
+    built from the voices of those who still carry the language,
+    for those who will need to learn it.
+  </p>
+  <div class="counter-wrap">
+    <div class="counter-number" id="live-counter">—</div>
+    <div class="counter-label">phrases preserved so far</div>
+    <div class="counter-sublabel">and growing every day</div>
+  </div>
+  <button class="hero-cta" onclick="document.getElementById('contribute').scrollIntoView({behavior:'smooth'})">
+    Add your voice →
+  </button>
+</section>
 
-<main>
+<!-- WHY IT MATTERS -->
+<section class="story">
+  <div class="story-card">
+    <div class="story-icon">🗣</div>
+    <div class="story-title">Native voices</div>
+    <div class="story-text">Recordings from elders, diaspora speakers and partial speakers — every voice carries something irreplaceable.</div>
+  </div>
+  <div class="story-card">
+    <div class="story-icon">📖</div>
+    <div class="story-title">Cultural depth</div>
+    <div class="story-text">Not just words — proverbs, context, stories and the situations in which expressions are actually used.</div>
+  </div>
+  <div class="story-card">
+    <div class="story-icon">🤖</div>
+    <div class="story-title">AI-powered learning</div>
+    <div class="story-text">This archive will train a learning platform so future generations can hear and learn Kashmiri from real speakers.</div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="section-divider">
+  <div class="divider-line"></div>
+  <div class="divider-text">Contribute a phrase</div>
+  <div class="divider-line"></div>
+</div>
+
+<!-- FORM -->
+<div class="form-section" id="contribute">
   <div id="form-view">
     <div class="intro">
-      <p>You are helping preserve the Kashmiri language for future generations. Every phrase, proverb, or expression you share becomes part of a living archive that will teach those who come after us.</p>
+      <p>Record a Kashmiri phrase, proverb, greeting — anything you remember from home. Then add what it means. That's it.</p>
       <p><strong>Your voice recordings are private.</strong> They will only be used for language research and the learning platform — never shared publicly without your permission.</p>
     </div>
 
@@ -273,7 +311,11 @@
     <div class="success-sub">Your contribution has been saved. You have helped keep the Kashmiri language alive for the next generation.</div>
     <button class="again-btn" onclick="resetForm()">Add more phrases</button>
   </div>
-</main>
+</div>
+
+<footer>
+  Built by <a href="https://www.linkedin.com/in/koushalbhat/" target="_blank">Koushal Bhat</a> · Zabaan Language Preservation Project
+</footer>
 
 <div class="toast" id="toast"></div>
 
@@ -281,6 +323,7 @@
 const CLOUDINARY_CLOUD_NAME    = 'dt5rljllp';
 const CLOUDINARY_UPLOAD_PRESET = 'language-speech-store';
 const SHEETS_ENDPOINT          = 'https://script.google.com/macros/s/AKfycbzdTpzz5eanPSndCosK6LDWAumplOIKfpZ6vJS_9fCv6jaI9UkUSkVb8ZTB6GmXwq0/exec';
+const COUNTER_ENDPOINT         = 'https://script.google.com/macros/s/AKfycbzHgmVySr0urxvfKqzZuYEKepp9z10E54TNcmPJ9BChhnCJdZlIu3vOvdGczWH3j9Lc/exec';
 
 const LANGS = [
   { v:'hi', l:'Hindi' }, { v:'en', l:'English' },
@@ -289,31 +332,48 @@ const LANGS = [
   { v:'kn', l:'Kannada' }, { v:'ml', l:'Malayalam' }, { v:'or', l:'Odia' },
 ];
 
-const MIC_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-  <rect x="9" y="2" width="6" height="11" rx="3"/>
-  <path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/>
-  <line x1="8" y1="22" x2="16" y2="22"/></svg>`;
-
-const STOP_SVG = `<svg viewBox="0 0 24 24" fill="#fff" stroke="none">
-  <rect x="7" y="7" width="10" height="10" rx="2"/></svg>`;
-
-const MIC_SVG_WHITE = `<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-  <rect x="9" y="2" width="6" height="11" rx="3"/>
-  <path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/>
-  <line x1="8" y1="22" x2="16" y2="22"/></svg>`;
+const MIC_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>`;
+const STOP_SVG = `<svg viewBox="0 0 24 24" fill="#fff" stroke="none"><rect x="7" y="7" width="10" height="10" rx="2"/></svg>`;
+const MIC_SVG_WHITE = `<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>`;
 
 let pCount = 0;
 const S = {};
 
+/* ── LIVE COUNTER ── */
+async function loadCounter() {
+  try {
+    const res  = await fetch(COUNTER_ENDPOINT);
+    const data = await res.json();
+    animateCounter(data.count || 0);
+  } catch {
+    document.getElementById('live-counter').textContent = '18';
+  }
+}
+
+function animateCounter(target) {
+  const el = document.getElementById('live-counter');
+  const duration = 1400;
+  const startTime = performance.now();
+  function step(now) {
+    const progress = Math.min((now - startTime) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(eased * target);
+    if (progress < 1) requestAnimationFrame(step);
+    else el.textContent = target;
+  }
+  requestAnimationFrame(step);
+}
+
+loadCounter();
+
+/* ── PHRASE CARDS ── */
 addPhrase();
 
 function addPhrase() {
   pCount++;
   const id = pCount;
   S[id] = { kashmiri: newAudio(), translation: newAudio() };
-
   const langOpts = LANGS.map(l => `<option value="${l.v}"${l.v==='hi'?' selected':''}>${l.l}</option>`).join('');
-
   const card = document.createElement('div');
   card.className = 'phrase-card';
   card.id = 'pc-' + id;
@@ -323,15 +383,10 @@ function addPhrase() {
       ${id > 1 ? `<button class="remove-btn" onclick="removePhrase(${id})">Remove</button>` : ''}
     </div>
     <div class="card-body">
-
-      <!-- KASHMIRI — voice only -->
       <div class="rec-field">
-        <div class="rec-field-top">
-          <span class="rec-field-label">Kashmiri phrase or expression</span>
-        </div>
+        <div class="rec-field-top"><span class="rec-field-label">Kashmiri phrase or expression</span></div>
         <div class="rec-panel" id="kp-${id}">
-          <div class="rec-row" style="min-height:90px;align-items:center;justify-content:center;cursor:pointer;"
-               onclick="toggleRec(${id},'kashmiri')" id="km-${id}">
+          <div class="rec-row" style="min-height:90px;align-items:center;justify-content:center;cursor:pointer;" onclick="toggleRec(${id},'kashmiri')" id="km-${id}">
             <div style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px 0;flex:1;">
               <div class="mic-ring" id="kmr-${id}" style="width:44px;height:44px;">${MIC_SVG}</div>
               <span class="mic-word" id="kw-${id}" style="font-size:13px;color:var(--ink3);">Tap to record pronunciation</span>
@@ -345,8 +400,6 @@ function addPhrase() {
           </div>
         </div>
       </div>
-
-      <!-- TRANSLATION -->
       <div class="rec-field">
         <div class="trans-header">
           <span class="trans-label">Translation in</span>
@@ -354,9 +407,7 @@ function addPhrase() {
         </div>
         <div class="rec-panel" id="tp-${id}">
           <div class="rec-row single">
-            <input type="text" class="rec-input" id="tr-${id}"
-              placeholder="Type the meaning… or press the mic to say it"
-              oninput="onInput()">
+            <input type="text" class="rec-input" id="tr-${id}" placeholder="Type the meaning… or press the mic to say it" oninput="onInput()">
             <div class="mic-col" id="tm-${id}" onclick="toggleRec(${id},'translation')">
               <div class="mic-ring" id="tmr-${id}">${MIC_SVG}</div>
               <span class="mic-word">Speak</span>
@@ -370,8 +421,6 @@ function addPhrase() {
           </div>
         </div>
       </div>
-
-      <!-- META -->
       <div class="meta-grid">
         <div class="meta-field">
           <label>Category</label>
@@ -396,9 +445,7 @@ function addPhrase() {
           <input type="text" id="nt-${id}" placeholder="e.g. my grandmother said this every morning, only used in winter…">
         </div>
       </div>
-    </div>
-  `;
-
+    </div>`;
   document.getElementById('phrase-list').appendChild(card);
   onInput();
   if (id > 1) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -407,8 +454,7 @@ function addPhrase() {
 function removePhrase(id) {
   stopRec(id, 'kashmiri'); stopRec(id, 'translation');
   document.getElementById('pc-' + id)?.remove();
-  delete S[id];
-  onInput();
+  delete S[id]; onInput();
 }
 
 function newAudio() {
@@ -433,8 +479,7 @@ async function startRec(id, side) {
     mr.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
     mr.onstop = () => {
       const blob = new Blob(chunks, { type: 'audio/webm' });
-      s.blob = blob;
-      s.url = URL.createObjectURL(blob);
+      s.blob = blob; s.url = URL.createObjectURL(blob);
       const pre = side === 'kashmiri' ? 'k' : 't';
       const player = document.getElementById(`${pre}pl-${id}`);
       const strip  = document.getElementById(`${pre}a-${id}`);
@@ -476,11 +521,10 @@ function setMicUI(id, side, active) {
     const timer = document.getElementById(`kt-${id}`);
     if (word)  word.style.display  = active ? 'none'  : 'block';
     if (timer) timer.style.display = active ? 'block' : 'none';
-    if (ring && active) ring.style.background = 'var(--red)';
+    if (ring && active)  ring.style.background = 'var(--red)';
     if (ring && !active) ring.style.background = '';
   } else {
-    const col = document.getElementById(`tm-${id}`);
-    col?.classList.toggle('rec', active);
+    document.getElementById(`tm-${id}`)?.classList.toggle('rec', active);
   }
 }
 
@@ -497,8 +541,7 @@ function discardAudio(id, side) {
 function setChip(id, side, type, text) {
   const el = document.getElementById(`${side === 'kashmiri' ? 'k' : 't'}c-${id}`);
   if (!el) return;
-  el.className = 'chip ' + type;
-  el.textContent = text;
+  el.className = 'chip ' + type; el.textContent = text;
 }
 
 function fmt(s) { return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0'); }
@@ -523,13 +566,10 @@ async function submitAll() {
   if (!document.getElementById('c1').checked || !document.getElementById('c2').checked) {
     showToast('Please accept the consent statements to continue.', true); return;
   }
-
   const ids = Object.keys(S).filter(id => document.getElementById('pc-' + id));
   if (!ids.length) { showToast('Please add at least one phrase.', true); return; }
-
   const hasContent = ids.some(id => S[id].kashmiri.blob);
   if (!hasContent) { showToast('Please record at least one Kashmiri phrase.', true); return; }
-
   const missingTranslation = ids.filter(id =>
     S[id].kashmiri.blob &&
     !document.getElementById('tr-'+id)?.value.trim() &&
@@ -542,18 +582,14 @@ async function submitAll() {
     document.getElementById('tp-' + first)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
   }
-
   const btn = document.getElementById('submit-btn');
   btn.disabled = true; btn.textContent = 'Saving…';
   setProgress(25);
-
   for (const id of ids) {
     await uploadAudio(id, 'kashmiri');
     await uploadAudio(id, 'translation');
   }
-
   setProgress(70);
-
   const contributor = {
     name:      document.getElementById('contributor-name').value.trim() || 'Anonymous',
     fluency:   document.getElementById('contributor-fluency').value,
@@ -561,7 +597,6 @@ async function submitAll() {
     region:    document.getElementById('contributor-region').value.trim(),
     timestamp: new Date().toISOString()
   };
-
   const phrases = ids.map(id => {
     const langCode = document.getElementById('tl-'+id)?.value;
     const langLabel = LANGS.find(l => l.v === langCode)?.l || 'Hindi';
@@ -575,7 +610,6 @@ async function submitAll() {
       notes:            document.getElementById('nt-'+id)?.value.trim() || ''
     };
   });
-
   try {
     await fetch(SHEETS_ENDPOINT, {
       method: 'POST', mode: 'no-cors',
@@ -583,11 +617,11 @@ async function submitAll() {
       body: JSON.stringify({ contributor, phrases })
     });
   } catch { console.log('Sheet call sent'); }
-
   setProgress(100);
   setTimeout(() => {
     document.getElementById('form-view').style.display = 'none';
     document.getElementById('success-screen').classList.add('show');
+    loadCounter();
   }, 400);
 }
 
@@ -622,10 +656,5 @@ function onInput() {
   setProgress(ids.length ? Math.min(85, Math.round((filled/ids.length)*60)) : 0);
 }
 </script>
-
-<footer style="text-align:center;padding:24px;font-size:12px;color:var(--ink3);">
-  Built by <a href="https://www.linkedin.com/in/koushalbhat/" target="_blank"
-  style="color:var(--gold);text-decoration:none;">Koushal Bhat</a> · Zabaan Project
-</footer>
 </body>
 </html>
